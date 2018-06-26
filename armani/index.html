@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content=" initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no">
+	<meta name="format-detection" content="email=no">
+	<meta name="apple-touch-fullscreen" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes" />	
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<title>test111111</title>
+	<link rel="stylesheet" type="text/css" href="css/style-promo.css">
+	<script>
+	//这里添加统计代码
+	</script>
+</head>
+<body>
+	<div id="loading">
+    	<!--<div class="loading auto-x auto-y">-->
+    	    <!--<div class="loadings"></div>-->
+    	    <!--<div id="percent">0%</div>-->
+    	<!--</div>-->
+    	<div class="loadinggohst"></div>
+	</div>
+	<div class="wrap" style="display: none">
+
+		<section class="screen screen1">
+			<div class="screen__bg screen1__bg"></div>
+			<div class="screen__inner">
+				<div class="screen__open"></div>
+				<div class="screen__open_zone"></div>
+				<div class="screen2__pic1"></div>
+			</div>
+		</section>
+		<div class="div1">
+			<img id="show" src="" width="526" height="526"  style="width: 78%;height: 49%">
+		</div>
+
+		<section class="screen screen2" style="display:none;">
+			<div class="screen__bg screen2__bg"></div>
+			<div class="screen__bg screen2__bg2"></div>
+			<a class="screen2__link" href="http://www.armani.com/"></a>
+			<div class="content" id="content2">
+				<!--<input type="text" value="" class="username" maxlength="3"></input>-->
+
+				<div class="inner" style="height:100%">
+					<!--<img src="img/photo__cover.png" id="photo__cover" style="width: 100%;height: 100%;z-index: 100;">-->
+
+					<!--图片合成区 demoCanvas-->
+					<!--<div class="button1 upimg"></div>-->
+				</div>
+
+				<!--<img src="img/screen__username.png" class="screen__username">-->
+				<!--上传已生成的图片至后台按钮 upload-->
+				<div style="clear:both"></div>
+			</div>
+			<canvas id="demoCanvas" width="526" height="526" style="width: 78%;height: 49%"></canvas>
+
+			<div class="screen__inner">
+				<div id="gesture-area" class="wrapper"></div><!--手势区域 gesture-area-->
+				<div class="screen__photo"></div><!--上传图片到画布按钮 inputimg-->
+				<input type="file" name="screen__photo" id="inputimg" class="screen__photo2" capture=“camera”><!--上传图片到画布按钮 inputimg-->
+				<div class="screen2__pic3"></div>
+				<div class="screen2__txt1"></div>
+				<div class="screen2__lvjing"></div>
+				<div class="screen2__subover"></div>
+				<div class="screen2__right2"></div>
+				<div class="screen2__choose"></div>
+				<div class="screen2__left2"></div>
+				<!--<div class="screen2__print"></div>-->
+				<div class="screen2__share"></div>
+				<div class="screen__right" ></div>
+				<div class="screen__left"></div>
+				<div id="changebg" class="screen2__next"></div>
+				<div class="screen2__next2"></div>
+				<div class="screen2__return"></div>
+				<div id="upload"  class="screen2__sub"></div>
+			</div>
+		</section>
+
+	</div>
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://7xooor.com1.z0.glb.clouddn.com/zepto.js"></script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script type="text/javascript" src="https://7xooor.com1.z0.glb.clouddn.com/preload.js"></script>
+	<script src="https://7xooor.com1.z0.glb.clouddn.com/easeljs-0.8.2.min.js"></script>
+	<script src="https://7xooor.com1.z0.glb.clouddn.com/interact.min.js"></script>
+	<script src="js/all.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			//微信分享配置
+			var href=encodeURIComponent(window.location.href.split('#')[0]);
+			var shareTitle="找寻你的ARMANI指纹滤镜";
+			var shareDes="定制你的Emporio Armani专属照片";
+			var shareLogo="https://support.21bit.cn/h5/armani-photo/img/thumb.jpg";
+			var shareLink="https://support.21bit.cn/h5/armani-photo/index.html"
+
+			$.ajax({
+				url:'https://support.21bit.cn/h5/api/weichat.php',
+				dataType:"json",
+				type:"POST",
+				data:{"url":href},
+				success:function(json){
+					wx.config({
+						debug: false,
+						appId: json.appId,
+						timestamp: json.timestamp,
+						nonceStr: json.nonceStr,
+						signature: json.signature,
+						jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareWeibo']
+					});
+				}
+			});
+
+			var options={
+				title: shareTitle,
+				link: shareLink,
+				desc:shareDes,
+				imgUrl: shareLogo,
+				success: function () {
+//					_czc.push(['_trackEvent', '分享次数', 'sharecounts', '微信分享次数统计']);
+				},
+				cancel: function () {
+					console.log("失败")
+				}
+			};
+			wx.ready(function(){
+				wx.onMenuShareAppMessage(options);
+				wx.onMenuShareTimeline(options);
+				wx.ononMenuShareWeibo(options);
+			});
+			wx.error(function(res){
+				console.log("失败");
+			})
+		});
+
+	</script>
+	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261358040'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1261358040' type='text/javascript'%3E%3C/script%3E"));</script>
+</body>
+</html>
